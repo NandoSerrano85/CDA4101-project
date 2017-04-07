@@ -1,11 +1,11 @@
-##Team name: Packers
+## Team name: Packers
 
-#Team members:
+# Team members:
   - Fernando
   - Carlos
   - Chin
   - Alejandro
 
-#Title:
+# Title:
 
-#Topic:
+# Topic:
