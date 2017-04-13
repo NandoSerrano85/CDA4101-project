@@ -1,0 +1,17 @@
+	
+	1. Read file from cpu 
+		a. Figure out size of image. Template: 3rd assignment method 
+		b. Read the image, determine the size of the image
+		c. Decide how big the image is and compress
+		
+	2. Send it to gpu 
+		a. Cores decide how many threads we need
+		b. Maximum - 2^10 
+		c. 2,495 cores
+		d. Amount of cores = amount of threads 
+		e. Dataset/# of threads + 1
+		f. Decide how big the image is and compress
+		
+	3. Run code to compress
+	4. Send back to cpu
+	5. Send through ftp connection
