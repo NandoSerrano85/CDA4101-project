@@ -1,0 +1,27 @@
+	1. FIND CPU ALGORITHM FOR IMAGE COMPRESSOR 
+
+	1. Read file from cpu 
+		a. Figure out size of image. Template: 3rd assignment method 
+		b. Read the image, determine the size of the image
+		c. Decide how big the image is and compress
+		
+	2. Send it to gpu 
+		a. Cores decide how many threads we need
+		b. Maximum - 2^10 
+		c. 2,495 cores
+		d. Amount of cores = amount of threads 
+		e. Dataset/# of threads + 1
+		f. Decide how big the image is and compress
+	3. Determine what combination of color rgb 
+		a. Image size 
+		b. What changes is the data inside 
+		c. Makr them all as the same color and make it negligible 
+			i. DEPENDING ON THE DATA
+		d. Red
+		e. Green = 
+		f. Blue
+	4. 
+		
+	5. Run code to compress
+	6. Send back to cpu
+	7. Send through ftp connection
