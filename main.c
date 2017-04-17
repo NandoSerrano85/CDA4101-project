@@ -16,12 +16,13 @@ of any other person."
 
 #define TRUE = 1
 
+/*
 //cuda function
 __global__ void compresser(){
     int i = threadIdx.x;
 
 }
-//
+// middleware to handle gpu core and thread usage
 void middleware(PIXEL* original, int rows, int cols,
                 PIXEL** new){
     int numThreads = 1024;
@@ -33,21 +34,26 @@ void middleware(PIXEL* original, int rows, int cols,
     cudaMemcpy(gpuAllocation, ????, original*sizeof(int), cudaMemcpyHostToDevice);
     compressor<<<numCores, numThreads>>>();
     cudaMemcpy(new, gpuAllocation, original*sizeof(int), cudaMemcpyDeviceToHost);
-    cudaFree(&gpuAllocation); 
-}
-int main (int agrc, int agrv){
+    cudaFree(&gpuAllocation);
+}*/
+int main (int agrc, char **agrv){
 
 
     int done = 0;
     FILE *inputfile;
     inputfile = fopen("image_list.txt", "r");
-    char [256] image_name;
+    char image_name [256];
     fgets(image_name, 256, (FILE*)inputfile);
+    printf("%s", image_name);
     while(!feof(inputfile)){
         int row = 0, col = 0;
         PIXEL *uncompressed, *compressed;
         readFile(image_name, &row, &col, &uncompressed);
 
+        printf("%d", row);
+        printf("%d", col);
+        printf("%s", &uncompressed);
+        //middleware(uncompressed, row, col, compressed);
 
         fgets(image_name, 256, (FILE*)inputfile);
     }
