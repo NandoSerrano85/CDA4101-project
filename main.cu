@@ -32,7 +32,7 @@ __global__ void compressor(PIXEL * orig, int row, int col){
 
 }
 // middleware to handle gpu core and thread usage
-void middleware(PIXEL* original, int rows, int cols, PIXEL** new){
+void middleware(PIXEL* original, int rows, int cols, PIXEL** new_image){
     int numThreads = 1024;
     int numCores = orginal*sizeof(int) /  numThreads + 1;
 
@@ -41,7 +41,7 @@ void middleware(PIXEL* original, int rows, int cols, PIXEL** new){
     cudaMalloc(&gpuAllocation, orginal*sizeof(int));
     cudaMemcpy(gpuAllocation, original, original*sizeof(int), cudaMemcpyHostToDevice);
     compressor<<<numCores, numThreads>>>(original, rows, cols);
-    cudaMemcpy(new, gpuAllocation, original*sizeof(int), cudaMemcpyDeviceToHost);
+    cudaMemcpy(&new_image, gpuAllocation, original*sizeof(int), cudaMemcpyDeviceToHost);
     cudaFree(&gpuAllocation);
 }
 int main (int agrc, char **agrv){
