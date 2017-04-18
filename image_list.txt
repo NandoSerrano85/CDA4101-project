@@ -1,1 +1,2 @@
-COLLISN.BMP
+COLLISN.bmp
+example.bmp
