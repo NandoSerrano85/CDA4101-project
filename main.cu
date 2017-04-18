@@ -32,20 +32,19 @@ __global__ void compressor(PIXEL * orig, int row, int col){
 
 }
 // middleware to handle gpu core and thread usage
-void middleware(PIXEL* original, int rows, int cols, PIXEL** new_image){
+void middleware(PIXEL* original, int rows, int cols, PIXEL* new_image){
     int numThreads = 1024;
     int numCores = orginal*sizeof(int) /  numThreads + 1;
 
     int* gpuAllocation;
 
-    cudaMalloc(&gpuAllocation, orginal*sizeof(int));
-    cudaMemcpy(gpuAllocation, original, original*sizeof(int), cudaMemcpyHostToDevice);
+    cudaMalloc(&gpuAllocation, original*sizeof(int));
+    cudaMemcpy(gpuAllocation, &original, original*sizeof(int), cudaMemcpyHostToDevice);
     compressor<<<numCores, numThreads>>>(original, rows, cols);
     cudaMemcpy(&new_image, gpuAllocation, original*sizeof(int), cudaMemcpyDeviceToHost);
     cudaFree(&gpuAllocation);
 }
 int main (int agrc, char **agrv){
-    int rows, cols;
     FILE *inputfile;
     inputfile = fopen("image_list.txt", "r");
     char image_name[256];
