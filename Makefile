@@ -5,7 +5,7 @@ bmplib.o:       bmplib.c bmplib.h
 		$(CC) -Wall -c $< -o $@
 
 main.o: main.cu bmplib.h
-		nvcc main.cu -o bmptool
+		nvcc main.cu 
 
 clean:
 		rm -f bmptool *.o core *~
