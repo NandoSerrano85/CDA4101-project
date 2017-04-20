@@ -16,7 +16,7 @@ of any other person."
 
 #define TRUE = 1
 
-/*
+
 //cuda function
 __global__ void compressor(PIXEL * orig, int row, int col){
     int i = blockIdx.x * blockDim.x + threadIdx.x;
@@ -32,19 +32,18 @@ __global__ void compressor(PIXEL * orig, int row, int col){
 
 }
 // middleware to handle gpu core and thread usage
-void middleware(PIXEL* original, int rows, int cols, int *a){
-    int sizePix = sizeof(PIXEL);
+void middleware(PIXEL* original, int rows, int cols, PIXEL* newImg){
     int numThreads = 1024;
-    int numCores = original*sizeof(PIXEL*) /  numThreads + 1;
+    int numCores = (rows * cols) /  numThreads + 1;
 
     int* gpuAllocation;
 
-    cudaMalloc(&gpuAllocation, original*sizeof(PIXEL));
-    cudaMemcpy(gpuAllocation, &original, original*sizeof(int), cudaMemcpyHostToDevice);
+    cudaMalloc(&gpuAllocation, (rows * cols));
+    cudaMemcpy(gpuAllocation, &original, (rows * cols), cudaMemcpyHostToDevice);
     compressor<<<numCores, numThreads>>>(original, rows, cols);
-    cudaMemcpy(a, gpuAllocation, original*sizeof(int), cudaMemcpyDeviceToHost);
+    cudaMemcpy(newImg, gpuAllocation, (rows * cols), cudaMemcpyDeviceToHost);
     cudaFree(&gpuAllocation);
-}*/
+}
 int main (int agrc, char **agrv){
     FILE *inputfile;
     inputfile = fopen("image_list.txt", "r");
@@ -55,9 +54,7 @@ int main (int agrc, char **agrv){
         int *a;
         PIXEL *uncompressed, *compressed;
         readFile("example.bmp", &row, &col, &uncompressed);
-        // middleware(uncompressed, row, col, a);
-        int sizePix = sizeof(PIXEL);
-        printf("%d\n", sizePix);
+        middleware(uncompressed, row, col, a);
 
         fgets(image_name, 256, (FILE*)inputfile);
     }
