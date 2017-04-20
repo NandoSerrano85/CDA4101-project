@@ -34,7 +34,7 @@ __global__ void compressor(PIXEL * orig, int row, int col){
 // middleware to handle gpu core and thread usage
 void middleware(PIXEL* original, int rows, int cols, int *a){
     int numThreads = 1024;
-    int numCores = original*sizeof(int) /  numThreads + 1;
+    int numCores = original*sizeof(PIXEL*) /  numThreads + 1;
 
     int* gpuAllocation;
 
