@@ -16,7 +16,7 @@ of any other person."
 
 #define TRUE = 1
 
-
+/*
 //cuda function
 __global__ void compressor(PIXEL * orig, int row, int col){
     int i = blockIdx.x * blockDim.x + threadIdx.x;
@@ -33,6 +33,7 @@ __global__ void compressor(PIXEL * orig, int row, int col){
 }
 // middleware to handle gpu core and thread usage
 void middleware(PIXEL* original, int rows, int cols, int *a){
+    int sizePix = sizeof(PIXEL);
     int numThreads = 1024;
     int numCores = original*sizeof(PIXEL*) /  numThreads + 1;
 
@@ -43,7 +44,7 @@ void middleware(PIXEL* original, int rows, int cols, int *a){
     compressor<<<numCores, numThreads>>>(original, rows, cols);
     cudaMemcpy(a, gpuAllocation, original*sizeof(int), cudaMemcpyDeviceToHost);
     cudaFree(&gpuAllocation);
-}
+}*/
 int main (int agrc, char **agrv){
     FILE *inputfile;
     inputfile = fopen("image_list.txt", "r");
@@ -54,7 +55,9 @@ int main (int agrc, char **agrv){
         int *a;
         PIXEL *uncompressed, *compressed;
         readFile("example.bmp", &row, &col, &uncompressed);
-        middleware(uncompressed, row, col, a);
+        // middleware(uncompressed, row, col, a);
+        int sizePix = sizeof(PIXEL);
+        printf("%d\n", sizePix);
 
         fgets(image_name, 256, (FILE*)inputfile);
     }
