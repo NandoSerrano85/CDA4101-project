@@ -51,10 +51,9 @@ int main (int agrc, char **agrv){
     fgets(image_name, 256, (FILE*)inputfile);
     while(!feof(inputfile)){
         int row, col;
-        int *a;
         PIXEL *uncompressed, *compressed;
         readFile("example.bmp", &row, &col, &uncompressed);
-        middleware(uncompressed, row, col, a);
+        middleware(uncompressed, row, col, compressed);
 
         fgets(image_name, 256, (FILE*)inputfile);
     }
