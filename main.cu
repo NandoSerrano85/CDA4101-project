@@ -44,9 +44,12 @@ void middleware(PIXEL* original, int rows, int cols, PIXEL* newImg){
     PIXEL* gpuAllocation;
 
     cudaMalloc(&gpuAllocation, (rows * cols));
+    printf("test for cudaMalloc");
     cudaMemcpy(gpuAllocation, original, (rows * cols), cudaMemcpyHostToDevice);
+    printf("test for cudaMemcpy to gpu");
     compressor<<<numCores, numThreads>>>(original, rows, cols);
     cudaMemcpy(newImg, gpuAllocation, (rows * cols), cudaMemcpyDeviceToHost);
+    printf("test for cudaMemcpy to cpu");
     cudaFree(&gpuAllocation);
 }
 int main (int agrc, char **agrv){
