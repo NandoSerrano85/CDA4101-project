@@ -19,10 +19,11 @@ of any other person."
 
 //cuda function
 __global__ void compressor(PIXEL * orig, int row, int col){
-    int img_pix[10000][10000][3] = {{{0}}};
     int n = blockIdx.x * blockDim.x + threadIdx.x;
     int k = blockIdx.y * blockDim.y + threadIdx.y;
+    printf("test for global GPU\n");
     int rows, cols;
+    int img_pix[10000][10000][3] = {{{0}}};
     for(rows = 0; rows < row; rows++){
             for(cols = 0; cols < col; cols++){
                     PIXEL * test = orig + rows + cols;
