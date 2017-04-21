@@ -19,7 +19,7 @@ of any other person."
 
 //cuda function
 __global__ void compressor(PIXEL * orig, int row, int col){
-    int *img_pix[row][col][2] = {NULL};
+    int *img_pix[row][col][2] = {{{0}}};
     int n = blockIdx.x * blockDim.x + threadIdx.x;
     int k = blockIdx.y * blockDim.y + threadIdx.y;
     int rows, cols;
