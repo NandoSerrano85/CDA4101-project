@@ -18,7 +18,8 @@ of any other person."
 
 
 //cuda function
-__global__ void compressor(PIXEL * orig, int row, int col, int img_pix[][][]){
+__global__ void compressor(PIXEL * orig, int row, int col){
+    int img_pix[row][col][2];
     int n = blockIdx.x * blockDim.x + threadIdx.x;
     int k = blockIdx.y * blockDim.y + threadIdx.y;
     int rows, cols;
@@ -45,7 +46,7 @@ void middleware(PIXEL* original, int rows, int cols, PIXEL* newImg){
 
     cudaMalloc(&gpuAllocation, (rows * cols));
     cudaMemcpy(gpuAllocation, original, (rows * cols), cudaMemcpyHostToDevice);
-    compressor<<<numCores, numThreads>>>(original, rows, cols, img_pix);
+    compressor<<<numCores, numThreads>>>(original, rows, cols);
     cudaMemcpy(newImg, gpuAllocation, (rows * cols), cudaMemcpyDeviceToHost);
     cudaFree(&gpuAllocation);
 }
