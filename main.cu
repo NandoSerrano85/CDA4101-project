@@ -26,9 +26,9 @@ __global__ void compressor(PIXEL * orig, int row, int col){
     for(rows = 0; rows < row; rows++){
             for(cols = 0; cols < col; cols++){
                     PIXEL * test = orig + rows + cols;
-                    img_pix[n][k][0] = (short)test -> r;
-                    img_pix[n][k][1] = (short)test -> g;
-                    img_pix[n][k][2] = (short)test -> b;
+                    img_pix[n][k][0] = (int)test -> r;
+                    img_pix[n][k][1] = (int)test -> g;
+                    img_pix[n][k][2] = (int)test -> b;
                     printf("%d, %d, %d\n", img_pix[n][k][0], img_pix[n][k][1], img_pix[n][k][2]);
                     printf("rows: %d, cols: %d\n", rows, cols);
 
