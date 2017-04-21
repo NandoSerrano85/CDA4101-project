@@ -41,7 +41,7 @@ void middleware(PIXEL* original, int rows, int cols, PIXEL* newImg){
     int numThreads = 512;
     int numCores = (rows * cols) /  numThreads + 1;
 
-    int* gpuAllocation;
+    PIXEL* gpuAllocation;
 
     cudaMalloc(&gpuAllocation, (rows * cols));
     cudaMemcpy(gpuAllocation, original, (rows * cols), cudaMemcpyHostToDevice);
