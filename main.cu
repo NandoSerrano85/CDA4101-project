@@ -18,13 +18,17 @@ of any other person."
 
 
 //cuda function
-__global__ void compressor(PIXEL * orig, int row, int col){
-    int i = blockIdx.x * blockDim.x + threadIdx.x;
+__global__ void compressor(PIXEL * orig, int row, int col, int img_pix[row][col][2]){
+    int n = blockIdx.x * blockDim.x + threadIdx.x;
+    int k = blockIdx.y * blockDim.y + threadIdx.y;
     int rows, cols;
     for(rows = 0; rows < row; rows++){
             for(cols = 0; cols < col; cols++){
                     PIXEL * test = orig + rows + cols;
-                    printf("%d, %d, %d\n", test -> r, test -> g, test -> b);
+                    img_pix[n][k][0] = test -> r;
+                    img_pix[n][k][1] = test -> g;
+                    img_pix[n][k][2] = test -> b;
+                    printf("%d, %d, %d\n", img_pix[n][k][0], img_pix[n][k][1], img_pix[n][k][2]);
                     printf("rows: %d, cols: %d\n", rows, cols);
 
             }
@@ -33,14 +37,15 @@ __global__ void compressor(PIXEL * orig, int row, int col){
 }
 // middleware to handle gpu core and thread usage
 void middleware(PIXEL* original, int rows, int cols, PIXEL* newImg){
-    int numThreads = 1024;
+    int numThreads = 512;
     int numCores = (rows * cols) /  numThreads + 1;
+    int img_pix[rows][cols][2];
 
     int* gpuAllocation;
 
     cudaMalloc(&gpuAllocation, (rows * cols));
-    cudaMemcpy(gpuAllocation, &original, (rows * cols), cudaMemcpyHostToDevice);
-    compressor<<<numCores, numThreads>>>(original, rows, cols);
+    cudaMemcpy(gpuAllocation, original, (rows * cols), cudaMemcpyHostToDevice);
+    compressor<<<numCores, numThreads>>>(original, rows, cols, img_pix);
     cudaMemcpy(newImg, gpuAllocation, (rows * cols), cudaMemcpyDeviceToHost);
     cudaFree(&gpuAllocation);
 }
