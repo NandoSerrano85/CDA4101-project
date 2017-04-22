@@ -14,22 +14,21 @@ of any other person."
 #include <unistd.h>
 #include "bmplib.h"
 
-#define TRUE = 1
+int img_pix[100000][100000][3] = {{{0}}};
 
 
 //cuda function
 __global__ void compressor(PIXEL * orig, int row, int col){
     int n = blockIdx.x * blockDim.x + threadIdx.x;
     int k = blockIdx.y * blockDim.y + threadIdx.y;
-    printf("test for global GPU\n");
     int rows, cols;
-    int img_pix[10000][10000][3] = {{{0}}};
     for(rows = 0; rows < row; rows++){
             for(cols = 0; cols < col; cols++){
                     PIXEL * test = orig + rows + cols;
                     img_pix[n][k][0] = (int)test -> r;
                     img_pix[n][k][1] = (int)test -> g;
                     img_pix[n][k][2] = (int)test -> b;
+                    //img_pix[n][k][3] =;
                     printf("%d, %d, %d\n", img_pix[n][k][0], img_pix[n][k][1], img_pix[n][k][2]);
                     printf("rows: %d, cols: %d\n", rows, cols);
 
@@ -45,12 +44,9 @@ void middleware(PIXEL* original, int rows, int cols, PIXEL* newImg){
     PIXEL* gpuAllocation;
 
     cudaMalloc(&gpuAllocation, (rows * cols));
-    printf("test for cudaMalloc\n");
     cudaMemcpy(gpuAllocation, original, (rows * cols), cudaMemcpyHostToDevice);
-    printf("test for cudaMemcpy to gpu\n");
     compressor<<<numCores, numThreads>>>(original, rows, cols);
     cudaMemcpy(newImg, gpuAllocation, (rows * cols), cudaMemcpyDeviceToHost);
-    printf("test for cudaMemcpy to cpu\n");
     cudaFree(&gpuAllocation);
 }
 int main (int agrc, char **agrv){
