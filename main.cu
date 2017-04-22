@@ -19,15 +19,15 @@ int img_pix[100000][100000][3] = {{{0}}};
 
 //cuda function
 __global__ void compressor(PIXEL * orig, int row, int col){
-    int n = blockIdx.x * blockDim.x + threadIdx.x;
-    int k = blockIdx.y * blockDim.y + threadIdx.y;
+    // int n = blockIdx.x * blockDim.x + threadIdx.x;
+    // int k = blockIdx.y * blockDim.y + threadIdx.y;
     int rows, cols;
     for(rows = 0; rows < row; rows++){
             for(cols = 0; cols < col; cols++){
                     PIXEL * test = orig + rows + cols;
-                    img_pix[n][k][0] = (int)test -> r;
-                    img_pix[n][k][1] = (int)test -> g;
-                    img_pix[n][k][2] = (int)test -> b;
+                    img_pix[blockIdx.x][threadIdx.x][0] = (int)test -> r;
+                    img_pix[blockIdx.x][threadIdx.x][1] = (int)test -> g;
+                    img_pix[blockIdx.x][threadIdx.x][2] = (int)test -> b;
                     //img_pix[n][k][3] =;
                     printf("%d, %d, %d\n", img_pix[n][k][0], img_pix[n][k][1], img_pix[n][k][2]);
                     printf("rows: %d, cols: %d\n", rows, cols);
