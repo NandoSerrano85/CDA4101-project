@@ -18,7 +18,7 @@ int img_pix[100000][100000] = {{0}};
 
 
 //cuda function
-__global__ void compressor(PIXEL * orig, int row, int col, int img_pix[][]){
+__global__ void compressor(PIXEL * orig, int row, int col, int **img_pix){
     // int n = blockIdx.x * blockDim.x + threadIdx.x;
     // int k = blockIdx.y * blockDim.y + threadIdx.y;
     int rows, cols;
