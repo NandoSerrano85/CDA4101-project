@@ -14,7 +14,7 @@ of any other person."
 #include <unistd.h>
 #include "bmplib.h"
 
-int img_pix[100000][100000] = {{0}};
+int **img_pix;
 
 
 //cuda function
