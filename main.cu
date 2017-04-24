@@ -26,8 +26,8 @@ __global__ void compressor(PIXEL * orig, int width, int height, PIXEL *result){
     int col = blockIdx.x * blockDim.x + threadIdx.x;
     int row = blockIdx.y * blockDim.y + threadIdx.y;
 
-    int rgb[3];
-    int n, k, count, mask;
+    int rgb[4];
+    int n, k, count = 0, mask = 0;
     for(n = 0; n < 2; n++){
             for(k = 0; k < 2; k++){
                     PIXEL * test = orig + row + col;
@@ -35,7 +35,7 @@ __global__ void compressor(PIXEL * orig, int width, int height, PIXEL *result){
                     rgb[1] = (int)test -> g;
                     rgb[2] = (int)test -> b;
 
-                    test = orig + rows + (col + 1);
+                    test = orig + row + (col + 1);
                     if((int)test -> r >= (rgb[0]-4) && (int)test -> r <= (rgb[0]+4)){
                         count++;
                     }if((int)test -> r >= (rgb[1]-4) && (int)test -> r <= (rgb[1]+4)){
