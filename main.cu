@@ -64,10 +64,11 @@ void middleware(PIXEL* original, int rows, int cols, PIXEL* result){
     // int numCores = (rows * cols) /  numThreads + 1;
 
     PIXEL* gpu_picture;
-    printf("middleware\n");
+
     cudaMalloc((void **)&gpu_picture, size);
     cudaMalloc((void **)&result, size);
     cudaMemcpy(gpu_picture, original, size, cudaMemcpyHostToDevice);
+    printf("middleware\n");
     compressor<<<grid, block>>>(gpu_picture, rows, cols, result);
     cudaMemcpy(result, gpu_picture, (rows * cols), cudaMemcpyDeviceToHost);
     cudaFree(&gpu_picture);
