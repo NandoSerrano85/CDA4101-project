@@ -85,6 +85,7 @@ int main (int agrc, char **agrv){
         printf("main\n");
         middleware(uncompressed, row, col, compressed);
 
+        writeFile("result.bmp", row, col, compressed)
         fgets(image_name, 256, (FILE*)inputfile);
     }
 }
