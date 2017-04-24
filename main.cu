@@ -40,7 +40,7 @@ __global__ void compressor(PIXEL * orig, int width, int height, PIXEL *result){
                         count++;
                     }if((int)test -> r >= (rgb[1]-4) && (int)test -> r <= (rgb[1]+4)){
                         count++;
-                    }if((int)test -> r >= (rgb[2]-4) && (int)test -> r <= (rgb[2]+4))
+                    }if((int)test -> r >= (rgb[2]-4) && (int)test -> r <= (rgb[2]+4)){
                         count++;
                     }
                     if(count == 3){
