@@ -59,7 +59,7 @@ __global__ void compressor(PIXEL * orig, int width, int height, PIXEL *result){
 void middleware(PIXEL* original, int rows, int cols, PIXEL* result){
     dim3  block (16 ,16);
     dim3  grid (cols/16,  rows/16);
-    int size = sizeof(unsigned char *) * rows * cols;
+    int size =  rows * cols;
     // int numThreads = 1024;
     // int numCores = (rows * cols) /  numThreads + 1;
     printf("%d\n", size);
