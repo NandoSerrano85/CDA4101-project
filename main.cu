@@ -64,7 +64,7 @@ void middleware(PIXEL* original, int rows, int cols, PIXEL* result){
     // int numCores = (rows * cols) /  numThreads + 1;
 
     PIXEL* gpu_picture;
-    printf("middleware");
+    printf("middleware\n");
     cudaMalloc((void **)&gpu_picture, size);
     cudaMalloc((void **)&result, size);
     cudaMemcpy(gpu_picture, original, size, cudaMemcpyHostToDevice);
@@ -82,6 +82,7 @@ int main (int agrc, char **agrv){
         PIXEL *uncompressed;
         PIXEL *compressed = NULL;
         readFile("example.bmp", &row, &col, &uncompressed);
+        printf("main\n");
         middleware(uncompressed, row, col, compressed);
 
         fgets(image_name, 256, (FILE*)inputfile);
