@@ -59,7 +59,7 @@ __global__ void compressor(PIXEL * orig, int width, int height, PIXEL *result){
 void middleware(PIXEL* original, int rows, int cols, PIXEL* result){
     dim3  block (16 ,16);
     dim3  grid (cols/16,  rows/16);
-    int size = (unsigned char *)* rows * cols;
+    int size = sizeof(unsigned char *) * rows * cols;
     // int numThreads = 1024;
     // int numCores = (rows * cols) /  numThreads + 1;
 
@@ -68,7 +68,7 @@ void middleware(PIXEL* original, int rows, int cols, PIXEL* result){
     cudaMalloc((void **)&gpu_picture, size);
     cudaMalloc((void **)&result, size);
     cudaMemcpy(gpu_picture, original, size, cudaMemcpyHostToDevice);
-    compressor<<<grid, blocks>>>(gpu_picture, rows, cols, result);
+    compressor<<<grid, block>>>(gpu_picture, rows, cols, result);
     cudaMemcpy(result, gpu_picture, (rows * cols), cudaMemcpyDeviceToHost);
     cudaFree(&gpu_picture);
 }
