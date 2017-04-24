@@ -64,7 +64,7 @@ void middleware(PIXEL* original, int rows, int cols, PIXEL* result){
     // int numCores = (rows * cols) /  numThreads + 1;
 
     PIXEL* gpu_picture;
-
+    printf("middleware");
     cudaMalloc((void **)&gpu_picture, size);
     cudaMalloc((void **)&result, size);
     cudaMemcpy(gpu_picture, original, size, cudaMemcpyHostToDevice);
