@@ -28,8 +28,8 @@ __global__ void compressor(PIXEL * orig, int width, int height, PIXEL *result){
 
     int rgb[3];
     int n, k, count, mask;
-    for(n = 0; n < 2; rows++){
-            for(k = 0; k < 2; cols++){
+    for(n = 0; n < 2; n++){
+            for(k = 0; k < 2; k++){
                     PIXEL * test = orig + row + col;
                     rgb[0] = (int)test -> r;
                     rgb[1] = (int)test -> g;
@@ -48,12 +48,13 @@ __global__ void compressor(PIXEL * orig, int width, int height, PIXEL *result){
                         rgb[3] = mask;
                     }
                     printf("%d, %d, %d\n", rgb[0], rgb[1], rgb[2]);
-                    printf("rows: %d, cols: %d\n", rows, cols);
+                    printf("rows: %d, cols: %d\n", row, col);
 
             }
         }
 
 }
+
 // middleware to handle gpu core and thread usage
 void middleware(PIXEL* original, int rows, int cols, PIXEL* result){
     dim3  block (16 ,16);
