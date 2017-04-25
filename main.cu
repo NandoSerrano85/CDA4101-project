@@ -79,7 +79,7 @@ int main (int agrc, char **agrv){
         int row, col;
         PIXEL *uncompressed;
         PIXEL *compressed = NULL;
-        readFile("example.bmp", &row, &col, &uncompressed);
+        readFile(image_name, &row, &col, &uncompressed);
         printf("main\n");
         middleware(uncompressed, row, col, compressed);
 
