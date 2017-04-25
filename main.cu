@@ -48,7 +48,7 @@ __global__ void compressor(PIXEL * orig, int width, int height, PIXEL *result){
                         rgb[3] = mask;
                     }
                     printf("%d, %d, %d\n", rgb[0], rgb[1], rgb[2]);
-                    printf("rows: %d, cols: %d\n", row, col);
+
 
             }
         }
@@ -60,8 +60,6 @@ void middleware(PIXEL* original, int rows, int cols, PIXEL* result){
     dim3  block (16 ,16);
     dim3  grid (cols/16,  rows/16);
     int size =  rows * cols;
-    // int numThreads = 1024;
-    // int numCores = (rows * cols) /  numThreads + 1;
     printf("%d\n", size);
     PIXEL* gpu_picture;
 
@@ -85,7 +83,7 @@ int main (int agrc, char **agrv){
         printf("main\n");
         middleware(uncompressed, row, col, compressed);
 
-        writeFile("result.bmp", row, col, compressed)
+        writeFile("result.bmp", row, col, compressed);
         fgets(image_name, 256, (FILE*)inputfile);
     }
 }
